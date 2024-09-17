@@ -1,11 +1,10 @@
 import java.util.Scanner;
 
-public class PeterStore {
+public class PETERPAULUNGAB {
 
     public static void main(String[] args) {
         System.out.println("WELCOME TO MY STORE\n REFLEX ESPORTS");
 
-        
         while (true) {
             order();
         }
@@ -57,19 +56,24 @@ public class PeterStore {
 
         if (total > 0) {
             System.out.println("Total amount to pay: " + total);
-            System.out.print("Enter payment amount: ");
-            pay = input.nextDouble();
 
-            
-            total = Math.round(total * 100.0) / 100.0;
-            pay = Math.round(pay * 100.0) / 100.0;
+            do {
+                System.out.print("Enter payment amount: ");
+                pay = input.nextDouble();
 
-            if (pay < total) {
-                System.out.println("Not enough payment.");
-            } else {
-                double change = pay - total;
-                System.out.println("Payment successful! Your change: " + Math.round(change * 100.0) / 100.0);
-            }
+                pay = Math.round(pay * 100.0) / 100.0;
+
+                if (pay < total) {
+                    System.out.println("Not enough payment. Please provide more money.");
+                    total -= pay;  
+                    System.out.println("Remaining balance: " + total);
+                } else {
+                    double change = pay - total;
+                    System.out.println("Payment successful! Your change: " + Math.round(change * 100.0) / 100.0);
+                    total = 0;  
+                }
+            } while (total > 0);
+
         } else {
             System.out.println("No items purchased.");
         }
