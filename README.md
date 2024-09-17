@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class PETERPAULUNGAB {
+public class PETERNEWGEN2 {
 
     public static void main(String[] args) {
         System.out.println("WELCOME TO MY STORE\n REFLEX ESPORTS");
@@ -54,6 +54,13 @@ public class PETERPAULUNGAB {
 
         } while (again.equalsIgnoreCase("Y"));
 
+        double discount = 0;
+        if (total >= 700)
+            discount = total * 0.05;
+            total -= discount;
+            System.out.println("Discount appied " + discount);
+            
+       
         if (total > 0) {
             System.out.println("Total amount to pay: " + total);
 
