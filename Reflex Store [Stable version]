@@ -8,7 +8,7 @@ public class Store {
             boolean continueShopping = order();
             if (!continueShopping) {
                 System.out.println("Thank you for visiting!");
-                break; // Stop the loop when the user presses 6
+                break; 
             }
         }
     }
@@ -46,7 +46,7 @@ public class Store {
                 System.out.println("Total so far: " + total);
 
             } else if (choice == 6) {
-                return false;  // Returning false to indicate that the user wants to exit
+                return false;  
             } else {
                 System.out.println("Invalid choice. Please select between 1 to 6.");
             }
@@ -87,6 +87,6 @@ public class Store {
             System.out.println("No items purchased.");
         }
         
-        return true;  // Returning true to continue shopping
+        return true;  
     }
 }
