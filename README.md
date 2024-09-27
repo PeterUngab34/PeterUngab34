@@ -16,7 +16,8 @@ public class Kupal {
 
     public static boolean order() {
         double total = 0;
-        double pay;
+        double paymentGiven = 0;
+        double remainingAmount = 0;
         String again;
 
         
@@ -69,8 +70,44 @@ public class Kupal {
         }
 
         
+        remainingAmount = total;
+        for (int attempts = 0; attempts < 3; attempts++) {
+            if (remainingAmount > 0) {
+                String payInput = JOptionPane.showInputDialog("Total amount to pay: " + remainingAmount + "\nEnter payment amount:");
+                double pay = Double.parseDouble(payInput);
+                pay = Math.round(pay * 100.0) / 100.0;
+
+                paymentGiven += pay;
+
+                if (pay < remainingAmount) {
+                    JOptionPane.showMessageDialog(null, "Not enough payment. Please provide more money.");
+                    remainingAmount -= pay;
+                    JOptionPane.showMessageDialog(null, "Remaining balance: " + remainingAmount);
+                } else {
+                    double change = pay - remainingAmount;
+                    JOptionPane.showMessageDialog(null, "Payment successful! Your change: " + Math.round(change * 100.0) / 100.0);
+                    remainingAmount = 0;
+                    break; 
+                }
+            }
+
+            if (attempts == 2 && remainingAmount > 0) {
+                JOptionPane.showMessageDialog(null, "Payment failed after 3 attempts. Order voided.");
+                return true; 
+            }
+        }
+
+        
         StringBuilder receipt = new StringBuilder();
-        receipt.append("========== RECEIPT ==========\n");
+        receipt.append("----------RECEIPT----------\n");
+        receipt.append("MENU ITEMS:\n" +
+                       "1. Burger - 50.00\n" +
+                       "2. Hotdog - 35.00\n" +
+                       "3. Ice Cream - 25.00\n" +
+                       "4. Smoothie - 45.00\n" +
+                       "5. Steak - 150.00\n" +
+                       "REFLEX STORE \n\n");
+        receipt.append("----------ORDER DETAILS----------\n");
         for (int i = 0; i < orderedItems.size(); i++) {
             receipt.append(orderedItems.get(i)).append(" x")
                    .append(orderedQuantities.get(i))
@@ -81,37 +118,24 @@ public class Kupal {
         if (discount > 0) {
             receipt.append("Discount: ").append(String.format("%.2f", discount)).append("\n");
         }
-        receipt.append("Total: ").append(String.format("%.2f", total)).append("\n");
-        receipt.append("=============================\n");
+        receipt.append("Total: ").append(String.format("%.2f", total + discount)).append("\n"); 
+        receipt.append("Discounted Total: ").append(String.format("%.2f", total)).append("\n"); 
+        receipt.append("Money Given: ").append(String.format("%.2f", paymentGiven)).append("\n");
+        
+        if (paymentGiven > total) {
+            double change = paymentGiven - total;
+            
+            receipt.append("CHANGE: ").append(String.format("[%.2f]", change)).append("\n");
+        }
+        
+        receipt.append("Thank you for shopping with us!\n" +
+"We appreciate your business and hope to see you again soon.\n "
+                +"Contact Us:\n" +
+"[09121613071] | [reflex01@gmail.com]\n" +
+"\n" +
+"Have a wonderful day!\n");
 
         JOptionPane.showMessageDialog(null, receipt.toString());
-
-        
-        if (total > 0) {
-            for (int attempts = 0; attempts < 3; attempts++) {
-                String payInput = JOptionPane.showInputDialog("Total amount to pay: " + total + "\nEnter payment amount:");
-                pay = Double.parseDouble(payInput);
-                pay = Math.round(pay * 100.0) / 100.0;
-
-                if (pay < total) {
-                    JOptionPane.showMessageDialog(null, "Not enough payment. Please provide more money.");
-                    total -= pay;
-                    JOptionPane.showMessageDialog(null, "Remaining balance: " + total);
-                } else {
-                    double change = pay - total;
-                    JOptionPane.showMessageDialog(null, "Payment successful! Your change: " + Math.round(change * 100.0) / 100.0);
-                    total = 0;
-                    break; 
-                }
-
-                if (attempts == 2) {
-                    JOptionPane.showMessageDialog(null, "Payment failed after 3 attempts. Order voided.");
-                    return true; 
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No items purchased.");
-        }
 
         
         String pet = JOptionPane.showInputDialog("Enter Pet Name:");
