@@ -1,7 +1,7 @@
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
-public class Kupal2 {
+public class Kupal {
     public static void main(String[] args) {
         System.out.println("WELCOME TO MY STORE\nREFLEX ESPORTS");
 
@@ -28,7 +28,8 @@ public class Kupal2 {
         double[] prices = {50.00, 35.00, 25.00, 45.00, 150.00};
         String[] items = {"Burger", "Hotdog", "Ice Cream", "Smoothie", "Steak"};
 
-        while(true) {
+        
+        do {
             String menu = "==========MENU ITEMS==========\n" +
                           "1. Burger - 50.00\n" +
                           "2. Hotdog - 35.00\n" +
@@ -38,13 +39,33 @@ public class Kupal2 {
                           "6. EXIT\n" +
                           "Select an item (1-5) or press 6 to EXIT:";
             String input = JOptionPane.showInputDialog(menu);
-             if (input==null){JOptionPane.showMessageDialog(null,"TRY AGAIN!");continue;} 
-             int choice = Integer.parseInt(input);
-          
+            
+            
+            if (input == null || input.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid input! Please try again.");
+                continue;
+            }
+
+            
+            int choice;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid number!");
+                continue;
+            }
+            
             if (choice >= 1 && choice <= 5) {
+                
                 String qtyInput = JOptionPane.showInputDialog("You chose " + items[choice - 1] +
                                                                 "\nHow many would you like to buy?");
-                int quantity = Integer.parseInt(qtyInput);
+                int quantity;
+                try {
+                    quantity = Integer.parseInt(qtyInput);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid quantity!");
+                    continue;
+                }
 
                 
                 orderedItems.add(items[choice - 1]);
@@ -53,14 +74,17 @@ public class Kupal2 {
 
                 total += quantity * prices[choice - 1];
                 JOptionPane.showMessageDialog(null, "Total so far: " + total);
+
             } else if (choice == 6) {
                 return false;  
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid choice. Please select between 1 to 6.");
             }
 
+            
             again = JOptionPane.showInputDialog("Would you like to buy more? (Y/N):");
-      while (again.equalsIgnoreCase("Y"));   while (again.equalsIgnoreCase("Y"));
+            
+        } while (again != null && again.equalsIgnoreCase("Y"));
 
         
         double discount = 0;
@@ -72,11 +96,25 @@ public class Kupal2 {
 
         
         remainingAmount = total;
+        boolean paymentSuccessful = false;
+
         for (int attempts = 0; attempts < 3; attempts++) {
             if (remainingAmount > 0) {
                 String payInput = JOptionPane.showInputDialog("Total amount to pay: " + remainingAmount + "\nEnter payment amount:");
-                double pay = Double.parseDouble(payInput);
-                pay = Math.round(pay * 100.0) / 100.0;
+                
+                
+                if (payInput == null || payInput.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please try again.");
+                    continue;
+                }
+
+                double pay;
+                try {
+                    pay = Double.parseDouble(payInput);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid amount!");
+                    continue;
+                }
 
                 paymentGiven += pay;
 
@@ -88,27 +126,28 @@ public class Kupal2 {
                     double change = pay - remainingAmount;
                     JOptionPane.showMessageDialog(null, "Payment successful! Your change: " + Math.round(change * 100.0) / 100.0);
                     remainingAmount = 0;
+                    paymentSuccessful = true;
                     break; 
                 }
             }
+        }
 
-            if (attempts == 2 && remainingAmount > 0) {
-                JOptionPane.showMessageDialog(null, "Payment failed after 3 attempts. Order voided.");
-                return true; 
-            }
+        if (!paymentSuccessful) {
+            JOptionPane.showMessageDialog(null, "Payment failed after 3 attempts. Order voided.");
+            return true; 
         }
 
         
         StringBuilder receipt = new StringBuilder();
-        receipt.append("----------RECEIPT----------\n");
-        receipt.append("MENU ITEMS:\n" +
+        receipt.append("========== RECEIPT ==========\n");
+        receipt.append("========== MENU ITEMS ==========\n" +
                        "1. Burger - 50.00\n" +
                        "2. Hotdog - 35.00\n" +
                        "3. Ice Cream - 25.00\n" +
                        "4. Smoothie - 45.00\n" +
                        "5. Steak - 150.00\n" +
-                       "REFLEX STORE \n\n");
-        receipt.append("----------ORDER DETAILS----------\n");
+                       "6. EXIT\n\n");
+        receipt.append("========== ORDER DETAILS ==========\n");
         for (int i = 0; i < orderedItems.size(); i++) {
             receipt.append(orderedItems.get(i)).append(" x")
                    .append(orderedQuantities.get(i))
@@ -126,15 +165,10 @@ public class Kupal2 {
         if (paymentGiven > total) {
             double change = paymentGiven - total;
             
-            receipt.append("CHANGE: ").append(String.format("[%.2f]", change)).append("\n");
+            receipt.append("***** CHANGE: ").append(String.format("%.2f", change)).append(" *****\n");
         }
         
-        receipt.append("Thank you for shopping with us!\n" +
-"We appreciate your business and hope to see you again soon.\n "
-                +"Contact Us:\n" +
-"[09121613071] | [reflex01@gmail.com]\n" +
-"\n" +
-"Have a wonderful day!\n");
+        receipt.append("=============================\n");
 
         JOptionPane.showMessageDialog(null, receipt.toString());
 
@@ -151,5 +185,4 @@ public class Kupal2 {
 
         return true;  
     }
-}
 }
