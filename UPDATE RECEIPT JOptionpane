@@ -38,7 +38,7 @@ public class Kupal2 {
                           "6. EXIT\n" +
                           "Select an item (1-5) or press 6 to EXIT:";
             String input = JOptionPane.showInputDialog(menu);
-             if (input==null){JOptionPane.showMessageDialog(null,"Kupal");continue;} 
+             if (input==null){JOptionPane.showMessageDialog(null,"TRY AGAIN!");continue;} 
              int choice = Integer.parseInt(input);
           
             if (choice >= 1 && choice <= 5) {
