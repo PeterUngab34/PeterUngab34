@@ -1,0 +1,94 @@
+import javax.swing.JOptionPane;
+
+public class Boss {
+    public static void main(String[] args) {
+        int num1, num2, num3;
+
+        
+        String input = JOptionPane.showInputDialog("Enter number 1:");
+        num1 = Integer.parseInt(input);
+        
+        input = JOptionPane.showInputDialog("Enter number 2:");
+        num2 = Integer.parseInt(input);
+        
+        input = JOptionPane.showInputDialog("Enter number 3:");
+        num3 = Integer.parseInt(input);
+        
+        
+        int[] numbers = {num1, num2, num3};
+
+        
+        String[] options = {"Sum", "Average", "Minimum", "Maximum"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "What do you want to calculate?",
+                "Choose an option",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        
+        String resultMessage = "";
+        switch (choice) {
+            case 0: // Sum
+                resultMessage = "Sum: " + computeSum(numbers);
+                break;
+            case 1: // Average
+                resultMessage = "Average: " + computeAve(numbers);
+                break;
+            case 2: // Minimum
+                resultMessage = "Minimum: " + findMin(numbers);
+                break;
+            case 3: // Maximum
+                resultMessage = "Maximum: " + findMax(numbers);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "No option selected.");
+                return;
+        }
+
+        
+        JOptionPane.showMessageDialog(null, resultMessage);
+    }
+
+    
+    public static int computeSum(int[] array) {
+        int sum = 0;
+        for (int num : array) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    
+    public static int findMax(int[] array) {
+        int maxValue = array[0];
+        for (int num : array) {
+            if (num > maxValue) {
+                maxValue = num;
+            }
+        }
+        return maxValue;
+    }
+
+    
+    public static int findMin(int[] array) {
+        int minValue = array[0];
+        for (int num : array) {
+            if (num < minValue) {
+                minValue = num;
+            }
+        }
+        return minValue;
+    }
+
+    
+    public static double computeAve(int[] array) {
+        if (array.length == 0) return 0;
+        return (double) computeSum(array) / array.length;
+    }
+}
+
