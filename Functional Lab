@@ -1,0 +1,76 @@
+import java.util.Scanner;  
+  
+public class GeometricCalculations {  
+  
+   // Function to calculate the area of a circle  
+   public static double calculateCircleArea(double radius) {  
+      return Math.PI * Math.pow(radius, 2);  
+   }  
+  
+   // Function to calculate the area of a rectangle  
+   public static double calculateRectangleArea(double length, double width) {  
+      return length * width;  
+   }  
+  
+   // Function to calculate the area of a triangle  
+   public static double calculateTriangleArea(double base, double height) {  
+      return 0.5 * base * height;  
+   }  
+  
+   // Function to calculate the volume of a sphere  
+   public static double calculateSphereVolume(double radius) {  
+      return (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);  
+   }  
+  
+   // Function to calculate the surface area of a sphere  
+   public static double calculateSphereSurfaceArea(double radius) {  
+      return 4 * Math.PI * Math.pow(radius, 2);  
+   }  
+  
+   // Function to calculate the third side of a triangle using the Law of Cosines  
+   public static double calculateTriangleSide(double a, double b, double angleC) {  
+      return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2) - 2 * a * b * Math.cos(Math.toRadians(angleC)));  
+   }  
+  
+   // Function to calculate the area of a circle segment  
+   public static double calculateCircleSegmentArea(double radius, double angle) {  
+      return (Math.pow(radius, 2) / 2) * (Math.toRadians(angle) - Math.sin(Math.toRadians(angle)));  
+   }  
+  
+   public static void main(String[] args) {  
+      Scanner scanner = new Scanner(System.in);  
+  
+      // Prompt user for input  
+      System.out.print("Enter the radius of the circle: ");  
+      double circleRadius = scanner.nextDouble();  
+  
+      System.out.print("Enter the length and width of the rectangle (space-separated): ");  
+      double rectangleLength = scanner.nextDouble();  
+      double rectangleWidth = scanner.nextDouble();  
+  
+      System.out.print("Enter the base and height of the triangle (space-separated): ");  
+      double triangleBase = scanner.nextDouble();  
+      double triangleHeight = scanner.nextDouble();  
+  
+      System.out.print("Enter the radius of the sphere: ");  
+      double sphereRadius = scanner.nextDouble();  
+  
+      System.out.print("Enter the two sides and angle of the triangle (space-separated): ");  
+      double triangleSideA = scanner.nextDouble();  
+      double triangleSideB = scanner.nextDouble();  
+      double triangleAngleC = scanner.nextDouble();  
+  
+      System.out.print("Enter the radius and angle of the circle segment (space-separated): ");  
+      double circleSegmentRadius = scanner.nextDouble();  
+      double circleSegmentAngle = scanner.nextDouble();  
+  
+      // Calculate and display results  
+      System.out.println("Circle Area: " + calculateCircleArea(circleRadius));  
+      System.out.println("Rectangle Area: " + calculateRectangleArea(rectangleLength, rectangleWidth));  
+      System.out.println("Triangle Area: " + calculateTriangleArea(triangleBase, triangleHeight));  
+      System.out.println("Sphere Volume: " + calculateSphereVolume(sphereRadius));  
+      System.out.println("Sphere Surface Area: " + calculateSphereSurfaceArea(sphereRadius));  
+      System.out.println("Third Side of Triangle: " + calculateTriangleSide(triangleSideA, triangleSideB, triangleAngleC));  
+      System.out.println("Circle Segment Area: " + calculateCircleSegmentArea(circleSegmentRadius, circleSegmentAngle));  
+   }  
+}
